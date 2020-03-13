@@ -1,0 +1,26 @@
+{
+	"name": "ecomm",
+	"version": "1.0.0",
+	"description": "E-commerce app",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/andbroz/ecomm.git"
+	},
+	"keywords": [],
+	"author": "Andrzej Brodowicz",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/andbroz/ecomm/issues"
+	},
+	"homepage": "https://github.com/andbroz/ecomm#readme",
+	"dependencies": {
+		"express": "^4.17.1"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.2"
+	}
+}
