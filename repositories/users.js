@@ -1,5 +1,8 @@
 const fs = require('fs');
 const crypto = require('crypto');
+const util = require('util');
+
+const scrypt = util.promisify(crypto.scrypt);
 
 class UsersRepository {
 	constructor(filename) {
@@ -15,7 +18,7 @@ class UsersRepository {
 		}
 	}
 
-	//** read users array data from fs */
+	/** read users array data from fs */
 	async getAll() {
 		return JSON.parse(
 			await fs.promises.readFile(this.filename, {
@@ -24,18 +27,40 @@ class UsersRepository {
 		);
 	}
 
-	//** CREATE */
+	/** CREATE */
 	async create(attrs) {
 		// attrs = {email: 'abc@def.com', password: 'password'}
 
 		attrs.id = this.randomId();
+
+		const salt = crypto.randomBytes(8).toString('hex');
+		const buf = await scrypt(attrs.password, salt, 64);
+
 		const records = await this.getAll();
-		records.push(attrs);
+
+		const record = {
+			...attrs,
+			password: `${buf.toString('hex')}.${salt}`
+		};
+		records.push(record);
 		// write updated records back to this.filename
 		await this.writeAll(records);
+
+		return record;
+	}
+	/** comaprePassword
+	 *
+	 * @param {String} saved - hashed password with salt
+	 * @param {String} supplied - plain text password given by user
+	 */
+	async comparePasswords(saved, supplied) {
+		const [hashed, salt] = saved.split('.');
+		const buf = await scrypt(supplied, salt, 64);
+		const hashSupplied = buf.toString('hex');
+		return hashed === hashSupplied;
 	}
 
-	//** WRITE ALL */
+	/** WRITE ALL */
 	async writeAll(records) {
 		await fs.promises.writeFile(
 			this.filename,
@@ -43,12 +68,12 @@ class UsersRepository {
 		);
 	}
 
-	//** RANDOM ID */
+	/** RANDOM ID */
 	randomId() {
 		return crypto.randomBytes(4).toString('hex');
 	}
 
-	//** GET ONE */
+	/** GET ONE */
 
 	async getOne(id) {
 		const records = await this.getAll();
@@ -56,7 +81,7 @@ class UsersRepository {
 		return records.find(record => record.id === id);
 	}
 
-	///** DELETE */
+	/** DELETE */
 
 	async delete(id) {
 		const records = await this.getAll();
@@ -66,7 +91,7 @@ class UsersRepository {
 		await this.writeAll(filteredRecords);
 	}
 
-	//** UPDATE */
+	/** UPDATE */
 
 	async update(id, attrs) {
 		const records = await this.getAll();
@@ -82,7 +107,7 @@ class UsersRepository {
 		await this.writeAll(records);
 	}
 
-	//** GET ONE BY - filter */
+	/** GET ONE BY - filter */
 
 	async getOneBy(filters) {
 		const records = await this.getAll();
