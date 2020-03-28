@@ -5,7 +5,7 @@ module.exports = {
 	requireTitle: check('title')
 		.trim()
 		.isLength({ min: 5, max: 40 })
-		.withMessage('Invalid title.'),
+		.withMessage('Invalid title. Must be  4-40 char'),
 	requirePrice: check('price')
 		.trim()
 		.toFloat()
