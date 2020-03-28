@@ -1,6 +1,6 @@
 const express = require('express');
-const { check, validationResult } = require('express-validator');
 
+const { handleErrors } = require('./middlewares');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/singup');
 const signinTemplate = require('../../views/admin/auth/signin');
@@ -21,14 +21,15 @@ router.get('/signup', (req, res) => {
 router.post(
 	'/signup',
 	[requireEmail, requirePassword, requirePasswordConfirmation],
+	handleErrors(signupTemplate),
 	async (req, res) => {
-		const errors = validationResult(req);
-		console.log('errors :', errors);
+		// const errors = validationResult(req);
+		// console.log('errors :', errors);
 
-		if (!errors.isEmpty()) {
-			return res.send(signupTemplate({ req, errors }));
-		}
-		const { email, password, passwordConfirmation } = req.body;
+		// if (!errors.isEmpty()) {
+		// 	return res.send(signupTemplate({ req, errors }));
+		// }
+		const { email, password } = req.body;
 		// create a user in our user repo to represent this person
 		const user = await usersRepo.create({ email, password });
 		// store the id of that user inside the users cookie
@@ -50,14 +51,8 @@ router.get('/signin', (req, res) => {
 router.post(
 	'/signin',
 	[requireEmailExists, requireValidPasswordForUser],
+	handleErrors(signinTemplate),
 	async (req, res) => {
-		const errors = validationResult(req);
-		console.log('errors signin :', errors);
-
-		if (!errors.isEmpty()) {
-			return res.send(signinTemplate({ errors }));
-		}
-
 		const { email } = req.body;
 		const user = await usersRepo.getOneBy({ email });
 		req.session.userId = user.id;
