@@ -1,27 +1,7 @@
 [
   {
     "email": "test@test.com",
-    "password": "1a9fd4289c89a6ec07afe345fbcb9aeb4546863f0fa4478e7acc76d5d1e63a5534ef03f86f4ae75ddda23e92b44f9e53c4b3e7f25a1dce2870c5d41eab5b2fdc.21e5d76ea353a543",
-    "id": "30f51a23"
-  },
-  {
-    "email": "test2@test.com",
-    "password": "360a7436efeacaa6d5658d73484d76a808c2b05f29cb9e1a142d8b46156afd52a939e61bc8ae91cfbdd0f437077d8ea5ac5ccb3548bf86f69e7b5632f120490f.b087f996130c3bef",
-    "id": "c68ca253"
-  },
-  {
-    "email": "test@test.com",
-    "password": "3b78e2deea1d91a48eee7bcb7a3166abcdfbb08054b366288e38859720b124a76d2eb424831fa811debcb32b91d974b6a8015bd40cce2cfd37c27c1b0d326859.44ca2e829ba51934",
-    "id": "08105e4f"
-  },
-  {
-    "email": "test@test.com",
-    "password": "c027f496e0b7b5e433ba4619e57f1e5ff3ac3667db2d9e8b13b917b3ab95d997925a9f9e5c6e57c46fd938620f925648b18d288b31fb56d465ae9db7439eca15.ac54c3c14f88a622",
-    "id": "1418ca0c"
-  },
-  {
-    "email": "abc@bbb.pl",
-    "password": "483ab3f8a4191d79e301469491005b444859186f0eeb136a70e7dce3cf6ffcc14b884d583a7ede14a0e0926f2941050863d2650632825b2cf0b7213d84208bb9.0268dad1f0f1b82f",
-    "id": "94dba305"
+    "password": "f93e12c7dd7f0414d1febfda4535fb6d45466b9acc5a610efdf178cc5ebf9af8e8fdb432b8b7e639efad80054ab68075f41382a517a4bc96b3badc2e0c6dcaf3.b939f295aa1fb76e",
+    "id": "34a57bcb"
   }
 ]

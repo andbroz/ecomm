@@ -15,7 +15,7 @@ const {
 const router = express.Router();
 
 router.get('/signup', (req, res) => {
-	res.send(signupTemplate({ req }));
+	res.send(signupTemplate({}));
 });
 
 router.post(
@@ -23,19 +23,13 @@ router.post(
 	[requireEmail, requirePassword, requirePasswordConfirmation],
 	handleErrors(signupTemplate),
 	async (req, res) => {
-		// const errors = validationResult(req);
-		// console.log('errors :', errors);
-
-		// if (!errors.isEmpty()) {
-		// 	return res.send(signupTemplate({ req, errors }));
-		// }
 		const { email, password } = req.body;
 		// create a user in our user repo to represent this person
 		const user = await usersRepo.create({ email, password });
 		// store the id of that user inside the users cookie
 		req.session.userId = user.id; // Added by cookie session lib
 
-		res.send('Account created');
+		res.redirect('/admin/products');
 	}
 );
 
@@ -57,7 +51,7 @@ router.post(
 		const user = await usersRepo.getOneBy({ email });
 		req.session.userId = user.id;
 
-		res.send('You are signed in!');
+		res.redirect('/admin/products');
 	}
 );
 
